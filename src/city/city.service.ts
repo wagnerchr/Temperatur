@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma.service";
 import { City } from "./city.model";
+import { CreateCityDto } from "./dtos/create-city.dto";
 
 @Injectable()
 export class CityService {
@@ -14,7 +15,7 @@ export class CityService {
         return this.prisma.city.findUnique({where: {id:Number(id)} })
     }
 
-    async createCity(data: City): Promise<City> {
+    async createCity(data: CreateCityDto): Promise<City> {
         return this.prisma.city.create({
             data,
         })

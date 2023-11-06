@@ -1,10 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { City } from './city.model';
 import { CityService } from './city.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateCityDto } from './dtos/create-city.dto';
+import { TemperatureService } from '../temperature/temperature.service'; // Correção no import
 
+@ApiTags("cities")
 @Controller('/city')
 export class CityController {
-    constructor(private readonly cityService: CityService){}
+    constructor(
+        private readonly cityService: CityService,
+        private readonly temperatureService: TemperatureService, // Correção aqui
+    ){}
 
     @Get()
     async getAll(): Promise<City[]> {
@@ -12,8 +19,10 @@ export class CityController {
     }
 
     @Post()
-    async postBook(@Body() city: City): Promise<City> {
-        return this.cityService.createCity(city);
+    async postCity(@Body() createCityDto: CreateCityDto) {
+        const temperature = await this.temperatureService.getCityTemperature(createCityDto.name); // Correção aqui
+        createCityDto.temperature = temperature.current.temperature;
+        return this.cityService.createCity(createCityDto);
     }
 
     @Get(':id')
