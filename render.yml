@@ -1,0 +1,9 @@
+# render.yaml
+
+services:
+  - name: web
+    env:
+      - key: DATABASE_URL
+        from_secret: database-url-secret
+    build_command: npm run build
+    start_command: npm run start:prod
