@@ -1,8 +1,12 @@
+#RENDER.YML
+
 services:
   - name: web
     env:
       - key: NODE_ENV
         value: production
+      - key: DATABASE_URL
+        from_secret: database-url-secret
     build_command: npm ci
     start_command: npm run start:prod
     prebuild:
@@ -10,3 +14,8 @@ services:
       - npm install
       - prisma generate
       - prisma migrate deploy
+
+  - name: postgres
+    docker_compose:
+      path: docker-compose.yml
+      service: postgres
