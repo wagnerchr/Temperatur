@@ -1,12 +1,8 @@
-# render.yaml
-
 services:
   - name: web
     env:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
-        from_secret: database-url-secret
     build_command: npm ci
     start_command: npm run start:prod
     prebuild:
