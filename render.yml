@@ -3,7 +3,14 @@
 services:
   - name: web
     env:
+      - key: NODE_ENV
+        value: production
       - key: DATABASE_URL
         from_secret: database-url-secret
-    build_command: npm run build
+    build_command: npm ci
     start_command: npm run start:prod
+    prebuild:
+      - npm install -g prisma
+      - npm install
+      - prisma generate
+      - prisma migrate deploy
