@@ -3,14 +3,14 @@ import { City } from './city.model';
 import { CityService } from './city.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCityDto } from './dtos/create-city.dto';
-import { TemperatureService } from '../temperature/temperature.service'; // Correção no import
+import { TemperatureService } from '../temperature/temperature.service'; 
 
 @ApiTags("cities")
 @Controller('/city')
 export class CityController {
     constructor(
         private readonly cityService: CityService,
-        private readonly temperatureService: TemperatureService, // Correção aqui
+        private readonly temperatureService: TemperatureService, 
     ){}
 
     @Get()
@@ -20,7 +20,7 @@ export class CityController {
 
     @Post()
     async postCity(@Body() createCityDto: CreateCityDto) {
-        const temperature = await this.temperatureService.getCityTemperature(createCityDto.name); // Correção aqui
+        const temperature = await this.temperatureService.getCityTemperature(createCityDto.name); 
         createCityDto.temperature = temperature.current.temperature;
         return this.cityService.createCity(createCityDto);
     }
