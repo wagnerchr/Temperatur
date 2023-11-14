@@ -36,7 +36,7 @@ export class CityController {
         return this.cityService.updateCity(id, updateCityDto);
     }
 
-    @Delete('id')
+    @Delete(':id')
     async deleteCity(@Param('id') id:number): Promise<City> {
         return this.cityService.deleteCity(id)
     }
