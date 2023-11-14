@@ -4,6 +4,7 @@ import { CityService } from './city.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCityDto } from './dtos/create-city.dto';
 import { TemperatureService } from '../temperature/temperature.service'; 
+import { UpdateCityDto } from './dtos/update-city.dto';
 
 @ApiTags("cities")
 @Controller('/city')
@@ -31,12 +32,18 @@ export class CityController {
     }
 
     @Put(':id')
-    async updateBook(@Param('id') id:number, @Body() city: City): Promise<City> {
-        return this.cityService.updateCity(id, city);
+    async updateCity(@Param('id') id:number, @Body() updateCityDto: UpdateCityDto): Promise<City> {
+        return this.cityService.updateCity(id, updateCityDto);
     }
 
     @Delete('id')
     async deleteCity(@Param('id') id:number): Promise<City> {
         return this.cityService.deleteCity(id)
+    }
+
+    // Update City Temperature
+    @Put(':id/temperature')
+    async updateTemperature(@Param('id') id:number): Promise<City> {
+        return this.cityService.updateTemperature(id);
     }
 }
