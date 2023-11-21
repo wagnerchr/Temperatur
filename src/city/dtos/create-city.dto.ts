@@ -12,5 +12,12 @@ export class CreateCityDto {
         example: 'Cidade da Mãe'
     })
     description: string;
-    temperature?: number;
+
+    temperature: number;
+    wind_speed: number;
+    pressure: number;
+    uv_index: number;
+    humidity: number;
+    feelslike: number;
+    visibility: number;
 }

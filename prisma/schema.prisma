@@ -11,5 +11,11 @@
     id Int @id @default(autoincrement())
     name String
     description String?
-    temperature Float?
+    temperature Float
+    wind_speed Float
+    pressure Float
+    uv_index Float
+    humidity Float
+    feelslike Float
+    visibility Float
   }

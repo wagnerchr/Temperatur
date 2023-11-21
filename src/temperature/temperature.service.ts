@@ -6,7 +6,7 @@ export class TemperatureService {
   private readonly apiKey = process.env.API_KEY;
   private readonly baseUrl = 'http://api.weatherstack.com';
 
-  async getCityTemperature(city: string): Promise<any> {
+  async getCityData(city: string): Promise<any> {
     const response = await axios.get(`${this.baseUrl}/current`, {
       params: {
         access_key: this.apiKey,

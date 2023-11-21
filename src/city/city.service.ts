@@ -20,11 +20,25 @@ export class CityService {
         return this.prisma.city.findUnique({where: {id:Number(id)} })
     }
 
-    async createCity(data: CreateCityDto): Promise<City> {
-        return this.prisma.city.create({
-            data,
-        })
-    }
+        async createCity(createCityDto: CreateCityDto): Promise<City> {
+            const cityData = await this.temperatureService.getCityData(createCityDto.name);
+            
+            // Montar City DTO
+            const newCity: CreateCityDto = {
+                ...createCityDto,
+                temperature: cityData.current.temperature,
+                wind_speed: cityData.current.wind_speed,
+                pressure: cityData.current.pressure,
+                uv_index: cityData.current.uv_index,
+                humidity: cityData.current.humidity,
+                feelslike: cityData.current.feelslike,
+                visibility: cityData.current.visibility
+            }
+
+            return this.prisma.city.create({
+                data: newCity
+            })
+        }
 
     async updateCity(id: number, data: UpdateCityDto): Promise<City> {
         return this.prisma.city.update({
@@ -47,7 +61,7 @@ export class CityService {
         if (!city) 
             throw new Error('Cidade não encontrada');
         try {
-            const cityTemperature = await this.temperatureService.getCityTemperature(city.name);
+            const cityTemperature = await this.temperatureService.getCityData(city.name);
             return this.prisma.city.update({
                 where: {id: Number(id)},
                 data: {

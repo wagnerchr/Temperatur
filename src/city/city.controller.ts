@@ -21,8 +21,6 @@ export class CityController {
 
     @Post()
     async postCity(@Body() createCityDto: CreateCityDto) {
-        const temperature = await this.temperatureService.getCityTemperature(createCityDto.name); 
-        createCityDto.temperature = temperature.current.temperature;
         return this.cityService.createCity(createCityDto);
     }
 
