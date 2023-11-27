@@ -1,17 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { City } from './city.model';
-import { CityService } from './city.service';
+import { City } from '../models/city.model';
+import { CityService } from '../services/city.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateCityDto } from './dtos/create-city.dto';
-import { TemperatureService } from '../temperature/temperature.service'; 
-import { UpdateCityDto } from './dtos/update-city.dto';
+import { CreateCityDto } from '../dtos/create-city.dto';
+import { UpdateCityDto } from '../dtos/update-city.dto';
 
 @ApiTags("cities")
 @Controller('/city')
 export class CityController {
     constructor(
         private readonly cityService: CityService,
-        private readonly temperatureService: TemperatureService, 
     ){}
 
     @Get()
